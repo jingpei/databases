@@ -59,8 +59,9 @@ var app = {
       url: app.server,
       type: 'GET',
       contentType: 'application/json',
-      data: { order: '-createdAt', room: $("#roomSelect").val()},
+      data: { order: '-createdAt', roomname: $("#roomSelect").val()},
       success: function(data) {
+        console.log(data);
         // Don't bother if we have nothing to work with
         if (!data.results || !data.results.length) { return; }
 

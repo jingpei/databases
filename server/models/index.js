@@ -12,7 +12,9 @@ module.exports = {
           return rows;
         });
     }, // a function which produces all the messages
-    post: function () {} // a function which can be used to insert a message into the database
+    post: function (obj) {
+      return db.messages.postMessage(obj);
+    } // a function which can be used to insert a message into the database
   },
 
   users: {

@@ -36,8 +36,24 @@ module.exports = {
           }
         });
       });
+    },
+    //Post message query
+    postMessage: function(obj){
+      return new Promise(function(resolve, reject){
+        var queryString = "INSERT INTO messages (userId, text, roomName) values(";
+        queryString += (1 + ", " + obj.text + ", " + obj.roomname + ")");
+        connection.query(queryString, function(err){
+          if(err){
+            reject(err);
+          }
+          else{
+            resolve();
+          }
+        });
+      });
     }
   },
+
   //User requests
   users: {
 

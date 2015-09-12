@@ -34,7 +34,19 @@ module.exports = {
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
-      
+      //Get data
+      var reqData = "";
+      req.on("data", function(chunk){
+        reqData += chunk;
+      });
+      //On end
+      req.on("end", function(){
+        models.messages.post(JSON.parse(reqData))
+        .then(function(){
+          res.writeHead(201, headers);
+          res.end();
+        });
+      });
     } // a function which handles posting a message to the database
   },
 
