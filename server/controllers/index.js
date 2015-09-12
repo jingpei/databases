@@ -13,39 +13,33 @@ var headers = {
 module.exports = {
   messages: {
     get: function (req, res) {
-      //Once all data is received
-      console.log("1 we are in controller");
       //Request data
       var reqData = "";
       req.on("data", function(chunk){
         reqData += chunk;
       });
       req.on("end", function(){
-        console.log("Your data is: " + reqData);
-        console.log(" 2 ended");
         //Make a promise (these matter)
         models.messages.get()
         .then(function(rows){
           //Set headers here
           res.writeHead(200, headers);
           //End here
-          res.end({results: rows});
+          res.end(JSON.stringify({results: rows}));
         });
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
       //Get data
       var reqData = "";
-      req.on("data", function(chunk){
-        reqData += chunk;
-      });
+      console.log("1 starting post");
+      console.log(req.body);
       //On end
-      req.on("end", function(){
-        models.messages.post(JSON.parse(reqData))
-        .then(function(){
-          res.writeHead(201, headers);
-          res.end();
-        });
+      console.log("3 called end");
+      models.messages.post(req.body)
+      .then(function(){
+        res.writeHead(201, headers);
+        res.end(JSON.stringify({results: []}));
       });
     } // a function which handles posting a message to the database
   },

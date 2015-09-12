@@ -20,13 +20,11 @@ module.exports = {
   messages: {
     //Get messages query
     getMessages: function(){
+      var queryString = "SELECT * FROM messages ORDER BY createdAt ASC;";
       return new Promise(function(resolve, reject){
-        connection.query("SELECT * FROM messages ORDER BY createdAt DESC", function(err, rows, fields){
+        connection.query(queryString, function(err, rows, fields){
           //If there's an error
-
           //Logging that there rows are here
-          console.log("HERES YOUR ROWS !!!!");
-          console.log(rows);
           if(err){
             reject(err);
           }
@@ -39,9 +37,19 @@ module.exports = {
     },
     //Post message query
     postMessage: function(obj){
+      //Add user if they don't exist
+      var queryString = "SELECT * FROM users WHERE username = '" + obj.username + "';";
+      connection.query(queryString, function(err, rows){
+        if(rows.length === 0){
+          //Insert user
+          queryString = "INSERT INTO users (username) values('" + obj.username + "');";
+          connection.query(queryString, function(err){console.log("han yolo");});
+        }
+      });
       return new Promise(function(resolve, reject){
-        var queryString = "INSERT INTO messages (userId, text, roomName) values(";
-        queryString += (1 + ", " + obj.text + ", " + obj.roomname + ")");
+        queryString = "INSERT INTO messages (username, text, roomName) values(";
+        queryString += ("'"+obj.username + "', '" + obj.text + "', '" + obj.roomname + "');");
+        console.log(queryString);
         connection.query(queryString, function(err){
           if(err){
             reject(err);

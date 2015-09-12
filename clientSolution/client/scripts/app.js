@@ -19,6 +19,7 @@ var app = {
     app.$chats = $('#chats');
     app.$roomSelect = $('#roomSelect');
     app.$send = $('#send');
+    app.$username = $("#username");
 
     // Add listeners
     app.$main.on('click', '.username', app.addFriend);
@@ -37,7 +38,6 @@ var app = {
     app.startSpinner();
     // Clear messages input
     app.$message.val('');
-
     // POST the message to the server
     $.ajax({
       url: app.server,
@@ -46,6 +46,7 @@ var app = {
       contentType: 'application/json',
       success: function (data) {
         // Trigger a fetch to update the messages, pass true to animate
+        console.log("successs!!!!!");
         app.fetch();
       },
       error: function (data) {
@@ -62,6 +63,7 @@ var app = {
       data: { order: '-createdAt', roomname: $("#roomSelect").val()},
       success: function(data) {
         console.log(data);
+        console.log("dataaaaaaaaa");
         // Don't bother if we have nothing to work with
         if (!data.results || !data.results.length) { return; }
 
@@ -114,7 +116,7 @@ var app = {
   },
 
   populateRooms: function(results) {
-    app.$roomSelect.html('<option value="__newRoom">New room...</option><option value="" selected>Lobby</option></select>');
+    app.$roomSelect.html('<option value="__newRoom">New room...</option></select>');
 
     if (results) {
       var rooms = {};
@@ -214,7 +216,7 @@ var app = {
 
   handleSubmit: function(evt) {
     var message = {
-      username: app.username,
+      username: app.$username.val(),
       text: app.$message.val(),
       roomname: app.roomname || 'lobby'
     };

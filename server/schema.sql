@@ -9,10 +9,10 @@ USE chat;
 CREATE TABLE messages (
   /* Describe your table here.*/
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  userId INT NOT NULL,
+  username VARCHAR(255) NOT NULL,
   text VARCHAR(255),
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  roomName VARCHAR(255)
+  roomname VARCHAR(255)
 );
 
 /* Create other tables and define schemas for them here! */   
@@ -20,7 +20,7 @@ CREATE TABLE messages (
 /*All users*/
 CREATE TABLE users(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  userName VARCHAR(255) NOT NULL
+  username VARCHAR(255) NOT NULL
 );
 
 /*Friends*/
@@ -28,6 +28,9 @@ CREATE TABLE friends(
   idA INT NOT NULL,
   idB INT NOT NULL
 );
+
+/*Create fake datass*/
+INSERT INTO messages (username, text, roomname) values("Jess", "lolo", "Lobby"),("Alex", "also lolo", "Lobby"),("Fredd :hand:", "Han Yolo", "Lobby");
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql

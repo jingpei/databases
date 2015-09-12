@@ -5,7 +5,6 @@ module.exports = {
   messages: {
     //Get message handoff to db/index.js
     get: function () {
-      console.log("3 THR3333333");
       //Return
       return db.messages.getMessages()
         .then(function(rows){
