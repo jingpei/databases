@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "server/app.js",
   "dependencies": {
+    "bluebird": "^2.10.0",
     "body-parser": "^1.9.2",
     "chai": "^1.9.1",
     "express": "^4.10.1",

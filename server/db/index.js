@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var bluebird = require('bluebird');
 
 // Create a database connection and export it from this file.
 // You will need to connect with the user "root", no password,
@@ -19,11 +20,21 @@ module.exports = {
   messages: {
     //Get messages query
     getMessages: function(){
-      connection.query("SELECT * FROM messages ORDER BY createdAt DESC", function(err, rows, fields){
-        //If there's an error
-        if(err) throw err;
-        console.log(rows);
-        return rows;
+      return new Promise(function(resolve, reject){
+        connection.query("SELECT * FROM messages ORDER BY createdAt DESC", function(err, rows, fields){
+          //If there's an error
+
+          //Logging that there rows are here
+          console.log("HERES YOUR ROWS !!!!");
+          console.log(rows);
+          if(err){
+            reject(err);
+          }
+          else{
+            console.log(rows);
+            resolve(rows);
+          }
+        });
       });
     }
   },
