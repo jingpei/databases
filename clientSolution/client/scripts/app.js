@@ -100,7 +100,10 @@ var app = {
     app.stopSpinner();
     if (Array.isArray(results)) {
       // Add all fetched messages
-      results.forEach(app.addMessage);
+      // results.forEach(app.addMessage);
+      for(var i = results.length - 1; -1 < i; --i){
+        app.addMessage(results[i]);
+      }
     }
 
     // Make it scroll to the bottom
